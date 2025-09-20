@@ -1,2 +1,1 @@
-# Frontend
-Sistema portuário para organizar e controlar contêineres no pátio, permitindo localizar, gerenciar entradas e saídas, visualizar o layout do pátio e acompanhar o histórico de movimentações de forma rápida e intuitiva. Desenvolvido em React para uma interface moderna e fácil de usar.
+O SmartTranslator é um tradutor inteligente que utiliza inteligência artificial para fornecer traduções contextuais precisas acompanhadas de imagens ilustrativas, exemplos práticos de uso e palavras relacionadas, tornando o aprendizado de idiomas mais eficiente e visual.
