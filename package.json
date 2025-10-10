@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@google/genai": "^1.23.0",
+    "@headlessui/react": "^2.2.9",
+    "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.1.13",
     "clsx": "^2.1.1",
     "openai": "^6.3.0",

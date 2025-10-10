@@ -4,6 +4,21 @@
   font-family: "Inter", sans-serif;
 }
 
+/* Barra de Rolagem */
+
+/* trilho */
+::-webkit-scrollbar{
+  background-color: #f1f1f1;
+  width: 5px;
+  border-radius: 50px;
+}
+
+/* scroll */
+::-webkit-scrollbar-thumb{
+  background-color: #c1c1c1;
+  border-radius: 500px;
+}
+
 @theme {
   --color-primary: #ff6b6b;
   --color-primary-light: #ff8e53;

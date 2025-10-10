@@ -4,6 +4,9 @@ import Input from '../../components/ui/Input';
 import LanguageSelector from '../../components/ui/LanguageSelector';
 import UsageExampleCards from '../../components/ui/UsageExampleCards';
 import { geminiApi } from '../../api/ai/gemini.service';
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
+import SelectMenu from '../../components/ui/SelectMenu';
+
 
 export default function Home() {
   const [inputSearch, setInputSearch] = useState<string>('');
@@ -29,6 +32,19 @@ export default function Home() {
       </div>
 
       <div className="w-full md:w-[696px] mx-auto mb-12 relative">
+
+        <div className='w-full h-15 mb-2 flex justify-center items-center'>
+          <div className='w-full h-full flex justify-end items-center pl-30'>
+            <SelectMenu/>
+          </div>
+          <div className='w-40 h-15 flex justify-center items-center '>
+            <FaArrowRightArrowLeft size={20} color='#79929d'/>
+          </div>
+          <div className='w-full h-full flex justify-start items-center pr-30'>
+            <SelectMenu/>
+          </div>
+        </div>
+
         <Input
           value={inputSearch}
           onChange={(e) => setInputSearch(e.target.value)}
