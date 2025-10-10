@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisualLearn - Tradutor Inteligente</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        },
+                        colors: {
+                            primary: '#ff6b6b',
+                            'primary-light': '#ff8e53',
+                        }
+                    }
+                }
+            }
+    </script>
+    <style>
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-spin-custom {
+            animation: spin 1s linear infinite;
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.3s ease;
+        }
+        .animate-slideUp {
+            animation: slideUp 0.4s ease;
+        }
+    </style>
+</head>
+<body class="font-sans bg-slate-900 text-slate-100 leading-relaxed">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-slate-800 border-b border-slate-700 px-5 sticky top-0 z-50 backdrop-blur-sm">
+            <div class="max-w-screen-2xl mx-auto flex items-center justify-between h-[70px]">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary to-yellow-300 rounded-xl flex items-center justify-center text-xl font-bold text-white">
+                        V
+                    </div>
+                    <div class="text-2xl font-bold text-white tracking-tight">
+                        VisualLearn
+                    </div>
+                </div>
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#" class="text-slate-400 font-medium px-4 py-2 rounded-lg transition-all hover:text-white hover:bg-slate-700">
+                        Home
+                    </a>
+                    <a href="#" class="text-slate-400 font-medium px-4 py-2 rounded-lg transition-all hover:text-white hover:bg-slate-700">
+                        Idiomas
+                    </a>
+                    <a href="#" class="text-slate-400 font-medium px-4 py-2 rounded-lg transition-all hover:text-white hover:bg-slate-700">
+                        Premium
+                    </a>
+                    <a href="#" class="text-slate-400 font-medium px-4 py-2 rounded-lg transition-all hover:text-white hover:bg-slate-700">
+                        Sobre
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 max-w-screen-2xl mx-auto px-5 py-15 w-full">
+            <!-- Hero Section -->
+            <section class="text-center mb-15">
+                <h1 class="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
+                    Tradutor Inteligente
+                </h1>
+                <p class="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
+                    Aprenda idiomas com traduções contextuais e exemplos visuais gerados por inteligência artificial
+                </p>
+            </section>
+
+            <!-- Search -->
+            <div class="max-w-3xl mx-auto mb-12 relative">
+                <div class="relative bg-slate-800 rounded-2xl shadow-lg border-2 border-transparent transition-all duration-300 focus-within:border-primary focus-within:shadow-primary/20 focus-within:shadow-lg">
+                    <input 
+                        type="text" 
+                        class="w-full px-6 py-5 pr-16 text-lg font-medium border-none rounded-2xl outline-none bg-transparent text-slate-100 placeholder-slate-500" 
+                        placeholder="Digite qualquer palavra..." 
+                        id="searchInput"
+                    >
+                    <button 
+                        class="absolute right-3 top-1/2 transform -translate-y-1/2 w-11 h-11 bg-gradient-to-br from-primary to-primary-light border-none rounded-xl text-white cursor-pointer flex items-center justify-center transition-all hover:scale-105 hover:shadow-lg hover:shadow-primary/30" 
+                        id="searchBtn"
+                    >
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="flex justify-center gap-3 mt-6 flex-wrap">
+                    <div class="lang-pill px-4 py-2 bg-primary text-white border border-primary rounded-full text-sm font-medium cursor-pointer transition-all" data-lang="auto">
+                        🌐 Detectar
+                    </div>
+                    <div class="lang-pill px-4 py-2 bg-slate-700 text-slate-200 border border-slate-600 rounded-full text-sm font-medium cursor-pointer transition-all hover:border-slate-500 hover:bg-slate-600" data-lang="pt">
+                        🇧🇷 Português
+                    </div>
+                    <div class="lang-pill px-4 py-2 bg-slate-700 text-slate-200 border border-slate-600 rounded-full text-sm font-medium cursor-pointer transition-all hover:border-slate-500 hover:bg-slate-600" data-lang="en">
+                        🇺🇸 English
+                    </div>
+                    <div class="lang-pill px-4 py-2 bg-slate-700 text-slate-200 border border-slate-600 rounded-full text-sm font-medium cursor-pointer transition-all hover:border-slate-500 hover:bg-slate-600" data-lang="es">
+                        🇪🇸 Español
+                    </div>
+                    <div class="lang-pill px-4 py-2 bg-slate-700 text-slate-200 border border-slate-600 rounded-full text-sm font-medium cursor-pointer transition-all hover:border-slate-500 hover:bg-slate-600" data-lang="fr">
+                        🇫🇷 Français
+                    </div>
+                    <div class="lang-pill px-4 py-2 bg-slate-700 text-slate-200 border border-slate-600 rounded-full text-sm font-medium cursor-pointer transition-all hover:border-slate-500 hover:bg-slate-600" data-lang="de">
+                        🇩🇪 Deutsch
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="hidden text-center py-20 animate-fadeIn" id="loadingState">
+                <div class="w-12 h-12 border-3 border-slate-700 border-t-primary rounded-full animate-spin-custom mx-auto mb-6"></div>
+                <div class="text-base text-slate-400 mb-2">Processando com IA...</div>
+                <div class="text-sm text-slate-500">Buscando e analisando imagens relevantes</div>
+            </div>
+
+            <!-- Results -->
+            <div class="hidden animate-slideUp" id="resultsContainer">
+                <!-- Word Header -->
+                <div class="bg-slate-800 rounded-3xl p-8 mb-8 shadow-sm text-center border border-slate-700">
+                    <div class="text-4xl font-bold text-white mb-3 tracking-tight word-main">
+                        Borboleta
+                    </div>
+                    <div class="text-2xl text-primary font-semibold mb-2 word-translation">
+                        Butterfly
+                    </div>
+                    <div class="text-base text-slate-400 font-mono word-phonetic">
+                        /ˈbʌtərˌflaɪ/
+                    </div>
+                </div>
+
+                <!-- Content Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+                    <!-- Images Section -->
+                    <div class="lg:col-span-2 bg-slate-800 rounded-3xl p-7 shadow-sm border border-slate-700">
+                        <div class="flex items-center gap-3 mb-6">
+                            <h3 class="text-xl font-semibold text-white">Imagens Selecionadas</h3>
+                            <span class="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-3 py-1 rounded-xl text-xs font-semibold uppercase tracking-wider">
+                                IA
+                            </span>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-slate-900 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 border-2 border-transparent hover:-translate-y-1 hover:border-primary hover:shadow-xl hover:shadow-primary/20">
+                                <div class="w-full h-40 bg-slate-700 flex items-center justify-center text-4xl text-slate-300">
+                                    🦋
+                                </div>
+                                <div class="p-4">
+                                    <div class="text-xs text-slate-400 leading-relaxed">
+                                        Borboleta monarca com asas alaranjadas e pretas, demonstrando as características visuais típicas desta espécie migratória.
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Outras imagens seguem o mesmo padrão com bg-slate-700 e text-slate-300 -->
+                        </div>
+                    </div>
+
+                    <!-- Sidebar -->
+                    <div class="flex flex-col gap-6">
+                        <!-- Examples -->
+                        <div class="bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-700">
+                            <h4 class="text-base font-semibold text-white mb-4 flex items-center gap-2">
+                                💬 Exemplos de Uso
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-slate-900 rounded-xl border-l-3 border-primary">
+                                    <div class="text-sm text-slate-400 mb-1">
+                                        "A borboleta pousou delicadamente na flor."
+                                    </div>
+                                    <div class="text-xs text-slate-500 font-medium">
+                                        Português
+                                    </div>
+                                </div>
+                                <!-- Outros exemplos seguem o mesmo padrão -->
+                            </div>
+                        </div>
+
+                        <!-- Related Words -->
+                        <div class="bg-slate-800 rounded-2xl p-6 shadow-sm border border-slate-700">
+                            <h4 class="text-base font-semibold text-white mb-4 flex items-center gap-2">
+                                🔗 Palavras Relacionadas
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                <div class="related-tag px-3 py-1.5 bg-slate-700 text-slate-300 rounded-full text-xs font-medium cursor-pointer transition-all border border-slate-600 hover:bg-primary hover:text-white hover:border-primary hover:-translate-y-0.5">
+                                    Inseto
+                                </div>
+                                <!-- Outras tags seguem o mesmo padrão -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div class="text-center py-25 text-slate-400" id="emptyState">
+                <div class="text-6xl mb-6 opacity-30">🔍</div>
+                <h3 class="text-xl font-semibold mb-2 text-white">
+                    Pronto para começar
+                </h3>
+                <p class="text-base">
+                    Digite uma palavra acima para ver imagens e traduções inteligentes
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // DOM Elements
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const loadingState = document.getElementById('loadingState');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const emptyState = document.getElementById('emptyState');
+        const langPills = document.querySelectorAll('.lang-pill');
+
+        // Sample words for demonstration
+        const sampleWords = {
+            'gato': { translation: 'Cat', phonetic: '/kæt/', emoji: '🐱' },
+            'casa': { translation: 'House', phonetic: '/haʊs/', emoji: '🏠' },
+            'água': { translation: 'Water', phonetic: '/ˈwɔːtər/', emoji: '💧' },
+            'amor': { translation: 'Love', phonetic: '/lʌv/', emoji: '❤️' },
+            'sol': { translation: 'Sun', phonetic: '/sʌn/', emoji: '☀️' },
+            'livro': { translation: 'Book', phonetic: '/bʊk/', emoji: '📚' },
+            'carro': { translation: 'Car', phonetic: '/kɑːr/', emoji: '🚗' },
+            'flor': { translation: 'Flower', phonetic: '/ˈflaʊər/', emoji: '🌸' }
+        };
+
+        // Current state
+        let currentState = 'empty'; // empty, loading, results
+
+        // Initialize
+        function init() {
+            showEmptyState();
+            searchInput.focus();
+        }
+
+        // State management
+        function showEmptyState() {
+            currentState = 'empty';
+            loadingState.classList.add('hidden');
+            resultsContainer.classList.add('hidden');
+            emptyState.classList.remove('hidden');
+        }
+
+        function showLoading() {
+            currentState = 'loading';
+            emptyState.classList.add('hidden');
+            resultsContainer.classList.add('hidden');
+            loadingState.classList.remove('hidden');
+        }
+
+        function showResults() {
+            currentState = 'results';
+            emptyState.classList.add('hidden');
+            loadingState.classList.add('hidden');
+            resultsContainer.classList.remove('hidden');
+        }
+
+        // Search functionality
+        function performSearch() {
+            const query = searchInput.value.trim().toLowerCase();
+            if (!query) return;
+
+            showLoading();
+
+            // Simulate AI processing
+            setTimeout(() => {
+                updateResults(query);
+                showResults();
+                
+                // Smooth scroll to results
+                setTimeout(() => {
+                    resultsContainer.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 100);
+            }, 1500 + Math.random() * 1000);
+        }
+
+        // Update results with searched word
+        function updateResults(query) {
+            const wordData = sampleWords[query] || {
+                translation: 'Translation',
+                phonetic: '/ˌtrænzˈleɪʃən/',
+                emoji: '📝'
+            };
+
+            // Update word header
+            document.querySelector('.word-main').textContent = 
+                query.charAt(0).toUpperCase() + query.slice(1);
+            document.querySelector('.word-translation').textContent = wordData.translation;
+            document.querySelector('.word-phonetic').textContent = wordData.phonetic;
+
+            // Update first image placeholder
+            const firstImagePlaceholder = document.querySelector('.bg-gradient-to-br');
+            if (firstImagePlaceholder) {
+                firstImagePlaceholder.textContent = wordData.emoji;
+            }
+        }
+
+        // Event Listeners
+        searchBtn.addEventListener('click', performSearch);
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Language selection
+        langPills.forEach(pill => {
+            pill.addEventListener('click', function() {
+                langPills.forEach(p => {
+                    p.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    p.classList.add('bg-white', 'text-slate-500', 'border-slate-200');
+                });
+                this.classList.remove('bg-white', 'text-slate-500', 'border-slate-200');
+                this.classList.add('bg-primary', 'text-white', 'border-primary');
+            });
+        });
+
+        // Related tags functionality
+        document.querySelectorAll('.related-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                searchInput.value = this.textContent.toLowerCase();
+                performSearch();
+            });
+        });
+
+        // Image items click effect
+        document.querySelectorAll('.cursor-pointer').forEach(item => {
+            if (item.classList.contains('bg-slate-50')) {
+                item.addEventListener('click', function() {
+                    this.style.transform = 'translateY(-2px) scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            }
+        });
+
+        // Dynamic placeholder
+        const placeholders = [
+            "Digite qualquer palavra...",
+            "Experimente: gato, casa, amor...",
+            "Busque em qualquer idioma...",
+            "Ex: butterfly, maison, Hund..."
+        ];
+        
+        let placeholderIndex = 0;
+        setInterval(() => {
+            if (currentState === 'empty') {
+                placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+                searchInput.placeholder = placeholders[placeholderIndex];
+            }
+        }, 2500);
+
+        // Initialize app
+        init();
+    </script>
+</body>
+</html>
