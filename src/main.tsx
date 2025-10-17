@@ -4,11 +4,14 @@ import App from './App.tsx';
 import './index.css';
 
 import { BrowserRouter } from 'react-router-dom';
+import SelectLanguage from './context/Language/index.tsx';
 
 createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
-    <StrictMode>
-      <App />
-    </StrictMode>
-  </BrowserRouter>
+  <SelectLanguage>
+    <BrowserRouter>
+      <StrictMode>
+        <App />
+      </StrictMode>
+    </BrowserRouter>
+  </SelectLanguage>
 );

@@ -1,21 +1,40 @@
 import { useState } from 'react';
 import CardImage from '../../components/ui/CardImage';
 import Input from '../../components/ui/Input';
-import LanguageSelector from '../../components/ui/LanguageSelector';
 import UsageExampleCards from '../../components/ui/UsageExampleCards';
 import { geminiApi } from '../../api/ai/gemini.service';
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import SelectMenu from '../../components/ui/SelectMenu';
+import { useSelectLanguage } from '../../context/Language/context';
 
 
 export default function Home() {
   const [inputSearch, setInputSearch] = useState<string>('');
-  const [language, setLanguage] = useState('ingles');
+  const [translatedSentence, setTranslatedSentence] = useState<string | undefined>('');
+  const [untranslatedSentence, setUntranslatedSentence] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
+  const {sourceLanguage, setSourceLanguage, targetLanguage, setTargetLanguage} = useSelectLanguage();
+
+  const handleClickLanguageSwitch = () => {
+    const source = sourceLanguage;
+    const target = targetLanguage;
+
+    setSourceLanguage(target);
+    setTargetLanguage(source);
+  }
   
   const handleSubmit = async () => {
     
-    await geminiApi(inputSearch)
+    setIsLoading(true);
+    setHasSearched(true);
+    
+    const sentence = await geminiApi(inputSearch, sourceLanguage.language, targetLanguage.language);
+    setUntranslatedSentence(inputSearch);
+    setTranslatedSentence(sentence)
+
+    setIsLoading(false);
 
   }
 
@@ -35,13 +54,15 @@ export default function Home() {
 
         <div className='w-full h-15 mb-2 flex justify-center items-center'>
           <div className='w-full h-full flex justify-end items-center pl-30'>
-            <SelectMenu/>
+            <SelectMenu type='source'/>
           </div>
-          <div className='w-40 h-15 flex justify-center items-center '>
-            <FaArrowRightArrowLeft size={20} color='#79929d'/>
+          <div className='w-40 h-15 flex justify-center items-center'>
+            <button onClick={handleClickLanguageSwitch} className='px-1 py-1 hover:bg-slate-100 cursor-pointer transition'>
+              <FaArrowRightArrowLeft size={20} color='#79929d'/>
+            </button>
           </div>
           <div className='w-full h-full flex justify-start items-center pr-30'>
-            <SelectMenu/>
+            <SelectMenu type='target'/>
           </div>
         </div>
 
@@ -53,18 +74,10 @@ export default function Home() {
           handleSubmit={handleSubmit}
         />
 
-        <div className="flex justify-center gap-3 mt-6 flex-wrap">
-          <LanguageSelector selected={true} language="auto" />
-          <LanguageSelector selected={false} language="portugues" />
-          <LanguageSelector selected={false} language="ingles" />
-          <LanguageSelector selected={false} language="espanhol" />
-          <LanguageSelector selected={false} language="frances" />
-          <LanguageSelector selected={false} language="alemao" />
-        </div>
       </div>
 
       {/* Loading State */}
-      <div className="text-center py-20 hidden">
+      { isLoading && <div className="text-center py-20">
         <div className="w-12 h-12 border-3 border-slate-100 border-t-primary rounded-full animate-spin mx-auto mb-6"></div>
 
         <div className="text-base text-slate-500 mb-2">
@@ -73,20 +86,20 @@ export default function Home() {
         <div className="text-sm text-slate-400">
           Buscando e analisando imagens relevantes
         </div>
-      </div>
+      </div>}
 
       {/* Results */}
-      <div className="animate-slideUp" id="resultsContainer">
+      { !isLoading && hasSearched && <div className="animate-slideUp" id="resultsContainer">
         {/* Word Header */}
         <div className="bg-white rounded-3xl p-8 mb-8 shadow-sm text-center border border-slate-100">
           <div className="text-4xl font-bold text-slate-900 mb-3 tracking-tight word-main">
-            Borboleta
+            {untranslatedSentence}
           </div>
           <div className="text-2xl text-primary font-semibold mb-2 word-translation">
-            Butterfly
+            {translatedSentence}
           </div>
           <div className="text-base text-slate-500 font-mono word-phonetic">
-            /ˈbʌtərˌflaɪ/
+            {/* /ˈbʌtərˌflaɪ/ */}
           </div>
         </div>
 
@@ -136,7 +149,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }

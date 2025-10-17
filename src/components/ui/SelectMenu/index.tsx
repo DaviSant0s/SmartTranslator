@@ -1,76 +1,42 @@
 import { useState, useRef, useEffect } from 'react';
+import { useSelectLanguage } from '../../../context/Language/context';
 
-const people = [
-  {
-    id: 1,
-    name: 'Wade Cooper',
-    avatar:
-      'https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 2,
-    name: 'Arlene Mccoy',
-    avatar:
-      'https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 3,
-    name: 'Devon Webb',
-    avatar:
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.25&w=256&h=256&q=80',
-  },
-  {
-    id: 4,
-    name: 'Tom Cook',
-    avatar:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 5,
-    name: 'Tanya Fox',
-    avatar:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 6,
-    name: 'Hellen Schmidt',
-    avatar:
-      'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 7,
-    name: 'Caroline Schultz',
-    avatar:
-      'https://images.unsplash.com/photo-1568409938619-12e139227838?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 8,
-    name: 'Mason Heaney',
-    avatar:
-      'https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 9,
-    name: 'Claudie Smitham',
-    avatar:
-      'https://images.unsplash.com/photo-1584486520270-19eca1efcce5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  {
-    id: 10,
-    name: 'Emil Schaefer',
-    avatar:
-      'https://images.unsplash.com/photo-1561505457-3bcad021f8ee?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
+export type Language = {
+  id: number;
+  language: string;
+  flag: string;
+};
+
+type SelectMenuProps = {
+  type: 'source' | 'target';
+};
+
+const languages: Language[] = [
+  { id: 1, language: 'Português', flag: '🇧🇷' },
+  { id: 2, language: 'Inglês', flag: '🇺🇸' },
+  { id: 3, language: 'Espanhol', flag: '🇪🇸' },
+  { id: 4, language: 'Francês', flag: '🇫🇷' },
+  { id: 5, language: 'Alemão', flag: '🇩🇪' },
+  { id: 6, language: 'Russo', flag: '🇷🇺' },
 ];
 
-export default function SelectMenu() {
-  const [selected, setSelected] = useState(people[3]);
+export default function SelectMenu({ type }: SelectMenuProps) {
+
+  const {sourceLanguage, setSourceLanguage, 
+           targetLanguage, setTargetLanguage} = useSelectLanguage();
+
+  const selected = type === 'source' ? sourceLanguage : targetLanguage;
+  const setSelected = type === 'source' ? setSourceLanguage : setTargetLanguage;
+
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -79,8 +45,8 @@ export default function SelectMenu() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleSelect = (person) => {
-    setSelected(person);
+  const handleSelect = (language: Language) => {
+    setSelected(language);
     setIsOpen(false);
   };
 
@@ -93,12 +59,12 @@ export default function SelectMenu() {
             className="w-full flex items-center justify-between rounded-2xl bg-white py-3 px-3 text-left text-gray-900 border border-gray-300 hover:border-gray-400 focus:border-[#ff7167aa] cursor-pointer"
           >
             <div className="flex items-center gap-3">
-              <img
-                src={selected.avatar}
-                alt=""
-                className="w-5 h-5 rounded-full bg-gray-100"
-              />
-              <span className="block truncate text-sm">{selected.name}</span>
+              <div className="w-5 h-5 flex justify-center items-center overflow-hidden rounded-full bg-gray-200">
+                {selected.flag}
+              </div>
+              <span className="block truncate text-sm">
+                {selected.language}
+              </span>
             </div>
             <svg
               className="w-5 h-5 text-gray-500"
@@ -117,7 +83,7 @@ export default function SelectMenu() {
 
           {isOpen && (
             <div className="absolute z-10 mt-1 w-full bg-white rounded-md shadow-lg max-h-56 overflow-auto border border-gray-200">
-              {people.map((person) => (
+              {languages.map((person) => (
                 <div
                   key={person.id}
                   onClick={() => handleSelect(person)}
@@ -126,11 +92,9 @@ export default function SelectMenu() {
                   }`}
                 >
                   <div className="flex items-center">
-                    <img
-                      src={person.avatar}
-                      alt=""
-                      className="w-5 h-5 rounded-full"
-                    />
+                    <div className="w-5 h-5 flex justify-center items-center overflow-hidden rounded-full bg-gray-200">
+                      {person.flag}
+                    </div>
                     <span
                       className={`ml-3 block truncate text-sm ${
                         selected.id === person.id
@@ -138,7 +102,7 @@ export default function SelectMenu() {
                           : 'font-normal'
                       }`}
                     >
-                      {person.name}
+                      {person.language}
                     </span>
                   </div>
                   {selected.id === person.id && (
