@@ -12,8 +12,7 @@ export const geminiApi = async (
   word: string,
   sourceLanguage: string,
   targetLanguage: string
-): Promise<string | undefined> => {
-  
+): Promise<string> => {
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
@@ -22,10 +21,17 @@ export const geminiApi = async (
         systemInstruction,
       },
     });
-    console.log(response.text);
 
-    return response.text;
+    const text = response.text;
+
+    if (typeof text === 'undefined') {
+      throw new Error('O texto traduzido retornado não poder ser underfined');
+    }
+
+    return text;
+
   } catch (error) {
     console.log(error);
+    return '';
   }
 };
