@@ -46,11 +46,11 @@ export default function Home() {
     setTranslatedSentence(res_sentence);
 
     const res_examples = await geminiExamples(
-      res_sentence,
-      targetLanguage.language
+      inputSearch,
+      sourceLanguage.language
     );
 
-    setExampleLanguage(targetLanguage.language);
+    setExampleLanguage(sourceLanguage.language);
     setExamples(res_examples.examples);
     setTopics(res_examples.topics);
 
