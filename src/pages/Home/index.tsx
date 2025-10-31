@@ -7,6 +7,7 @@ import { FaArrowRightArrowLeft } from 'react-icons/fa6';
 import SelectMenu from '../../components/ui/SelectMenu';
 import { useSelectLanguage } from '../../context/Language/context';
 import { geminiExamples } from '../../api/ai/geminiExamples.service';
+import { getImagesForSearch, type Image } from '../../api/images/unsplash.service';
 
 export default function Home() {
   const [inputSearch, setInputSearch] = useState<string>('');
@@ -17,6 +18,7 @@ export default function Home() {
   const [examples, setExamples] = useState<string[]>([]);
   const [topics, setTopics] = useState<string[]>([]);
   const [exampleLanguage, setExampleLanguage] = useState<string>('')
+  const [images, setImages] = useState<Image[]>([]);
 
   const {
     sourceLanguage,
@@ -50,9 +52,12 @@ export default function Home() {
       sourceLanguage.language
     );
 
+    const res_images = await getImagesForSearch(inputSearch);
+
     setExampleLanguage(sourceLanguage.language);
     setExamples(res_examples.examples);
     setTopics(res_examples.topics);
+    setImages(res_images);
 
     setIsLoading(false);
   };
@@ -140,11 +145,22 @@ export default function Home() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <CardImage img="" phrase="" />
-                <CardImage img="" phrase="" />
-                <CardImage img="" phrase="" />
-                <CardImage img="" phrase="" />
-                <CardImage img="" phrase="" />
+
+                {images.length > 0 ? (
+                  images.map((image) => (
+                    <div key={image.id}>
+                      <CardImage
+                        img={image.imageUrl}
+                        phrase={image.phrase}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  // Feedback caso não venham imagens
+                  <p className="text-slate-500 col-span-2 text-center py-4">
+                    Nenhuma imagem encontrada para "{untranslatedSentence}".
+                  </p>
+                )}
               </div>
             </div>
 
