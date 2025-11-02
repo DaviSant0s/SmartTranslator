@@ -6,7 +6,7 @@ Este é um projeto acadêmico desenvolvido para a disciplina de Cliente/Servidor
 
 O SmartTranslator é uma plataforma web de aprendizado de idiomas que vai além da tradução simples. Ao digitar uma palavra, a aplicação utiliza Inteligência Artificial (Google Gemini) para fornecer a tradução, frases de exemplo e tópicos relacionados, enquanto consome a API do Unsplash para exibir um contexto visual com imagens relevantes.
 
-## ✨ Funcionalidades
+## Funcionalidades
 
 * Tradução de palavras entre múltiplos idiomas.
 * Geração de frases de exemplo contextuais usando a API do Gemini.
@@ -14,7 +14,7 @@ O SmartTranslator é uma plataforma web de aprendizado de idiomas que vai além 
 * Exibição de galeria de imagens relevantes da API do Unsplash.
 * Interface reativa com estado de *loading* durante as chamadas de API.
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 * **Frontend:** React (com Vite.js)
 * **Linguagem:** TypeScript
@@ -25,7 +25,7 @@ O SmartTranslator é uma plataforma web de aprendizado de idiomas que vai além 
 
 ---
 
-## ⚙️ Como Executar o Projeto
+## Como Executar o Projeto
 
 Siga os passos abaixo para executar o projeto em sua máquina local.
 
