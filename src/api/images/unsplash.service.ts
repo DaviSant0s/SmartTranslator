@@ -4,7 +4,7 @@ export interface Image {
   phrase: string;
 }
 
-const accessKey = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
+const accessKey = 'B60Q7uUmqKoYliEMr9tVlomEP6vJcIEiE4KDwnX7LeY';
 
 // 3. Função de Busca Principal (com a ordem da URL do vídeo)
 export const getImagesForSearch = async (word: string): Promise<Image[]> => {
