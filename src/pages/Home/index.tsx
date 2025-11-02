@@ -139,9 +139,6 @@ export default function Home() {
                 <h3 className="text-xl font-semibold text-slate-900">
                   Imagens Selecionadas
                 </h3>
-                <span className="bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-3 py-1 rounded-xl text-xs font-semibold uppercase tracking-wider">
-                  IA
-                </span>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
