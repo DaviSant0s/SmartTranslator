@@ -1,6 +1,6 @@
 # SmartTranslator - Tradutor Visual Inteligente
 
-Este é um projeto acadêmico desenvolvido para a disciplina de Cliente/Servidor com Web Service da Universidade Federal do Rio Grande (FURG).
+Este é um projeto acadêmico desenvolvido para a disciplina de Sistemas distribuídos da Universidade Federal do Rio Grande (FURG).
 
 O SmartTranslator é uma plataforma web de aprendizado de idiomas que vai além da tradução simples. Ao digitar uma palavra, a aplicação utiliza Inteligência Artificial (Google Gemini) para fornecer a tradução, frases de exemplo e tópicos relacionados, enquanto consome a API do Unsplash para exibir um contexto visual com imagens relevantes.
 
