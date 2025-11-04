@@ -80,11 +80,17 @@ export default function Home() {
     setIsLoading(true);
     setHasSearched(true);
 
+    // Verificamos se a entrada é uma palavra única ou uma frase.
+    // Usamos trim() para limpar espaços e split(/\s+/) para dividir 
+    // por um ou mais espaços em branco (robusto para "palavra  dupla").
+    const isSingleWord = inputSearch.trim().split(/\s+/).length === 1;
+
     const res_sentence = await geminiApi(
       inputSearch,
       sourceLanguage.language,
       targetLanguage.language
     );
+
     setUntranslatedSentence(inputSearch);
     setTranslatedSentence(res_sentence);
 
@@ -93,7 +99,22 @@ export default function Home() {
       sourceLanguage.language
     );
 
-    const res_images = await getImagesForSearch(inputSearch);
+    // Preparamos os tópicos e a query do Unsplash
+    const topics = res_examples.topics || [];
+    let unsplashQuery = '';
+
+    if (isSingleWord) {
+      // Se for palavra única, usamos a própria palavra (limpa de espaços)
+      unsplashQuery = inputSearch.trim();
+    } else if (topics.length > 0) {
+      // Se for uma FRASE e a IA retornou tópicos, usamos os tópicos.
+      unsplashQuery = topics.slice(0, 3).join(', ');
+    } else {
+      // Usamos a frase original.
+      unsplashQuery = inputSearch;
+    }
+
+    const res_images = await getImagesForSearch(unsplashQuery);
 
     setExampleLanguage(sourceLanguage.language);
     setExamples(res_examples.examples);
