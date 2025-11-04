@@ -163,7 +163,7 @@ export default function Home() {
           <div className="bg-white rounded-3xl p-8 mb-8 shadow-sm text-center border border-slate-100">
 
             <div className="flex justify-center items-center gap-2 mb-2">
-              <div className="text-4xl font-bold text-slate-800 mb-3 tracking-tight word-main">
+              <div className="text-4xl font-bold text-slate-800 tracking-tight word-main">
                 {untranslatedSentence}
               </div>
               {/* Botão para falar */}

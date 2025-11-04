@@ -40,7 +40,6 @@ export default function Home() {
   };
 
   const handleSpeak = (text: string, lang: string) => {
-
     // Verifica se o navegador suporta a API
     if ('speechSynthesis' in window) {
       // Cancela qualquer fala anterior para evitar sobreposição
@@ -76,8 +75,7 @@ export default function Home() {
   };
 
   const handleSubmit = async () => {
-
-    if(!inputSearch)return;
+    if (!inputSearch) return;
 
     setIsLoading(true);
     setHasSearched(true);
@@ -163,9 +161,27 @@ export default function Home() {
         <div className="animate-slideUp" id="resultsContainer">
           {/* Word Header */}
           <div className="bg-white rounded-3xl p-8 mb-8 shadow-sm text-center border border-slate-100">
-            <div className="text-4xl font-bold text-slate-900 mb-3 tracking-tight word-main">
-              {untranslatedSentence}
+
+            <div className="flex justify-center items-center gap-2 mb-2">
+              <div className="text-4xl font-bold text-slate-800 mb-3 tracking-tight word-main">
+                {untranslatedSentence}
+              </div>
+              {/* Botão para falar */}
+              <button
+                onClick={() => {
+                  const langCode = getLanguageCodeForSpeech(
+                    sourceLanguage.language
+                  );
+                  handleSpeak(untranslatedSentence, langCode);
+                }}
+                className="p-2 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+                aria-label="Ouvir tradução"
+                title="Ouvir tradução"
+              >
+                <FaVolumeUp size={20} className="text-slate-500" />
+              </button>
             </div>
+
             <div className="flex justify-center items-center gap-2 mb-2">
               <div className="text-2xl text-primary font-semibold word-translation">
                 {translatedSentence}
