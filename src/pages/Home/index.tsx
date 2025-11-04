@@ -95,8 +95,8 @@ export default function Home() {
     setTranslatedSentence(res_sentence);
 
     const res_examples = await geminiExamples(
-      inputSearch,
-      sourceLanguage.language
+      res_sentence,
+      targetLanguage.language
     );
 
     // Preparamos os tópicos e a query do Unsplash
@@ -105,18 +105,18 @@ export default function Home() {
 
     if (isSingleWord) {
       // Se for palavra única, usamos a própria palavra (limpa de espaços)
-      unsplashQuery = inputSearch.trim();
+      unsplashQuery = res_sentence.trim();
     } else if (topics.length > 0) {
       // Se for uma FRASE e a IA retornou tópicos, usamos os tópicos.
       unsplashQuery = topics.slice(0, 3).join(', ');
     } else {
       // Usamos a frase original.
-      unsplashQuery = inputSearch;
+      unsplashQuery = res_sentence;
     }
 
     const res_images = await getImagesForSearch(unsplashQuery);
 
-    setExampleLanguage(sourceLanguage.language);
+    setExampleLanguage(targetLanguage.language);
     setExamples(res_examples.examples);
     setTopics(res_examples.topics);
     setImages(res_images);
