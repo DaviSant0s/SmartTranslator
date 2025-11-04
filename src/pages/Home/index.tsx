@@ -76,6 +76,9 @@ export default function Home() {
   };
 
   const handleSubmit = async () => {
+
+    if(!inputSearch)return;
+
     setIsLoading(true);
     setHasSearched(true);
 
