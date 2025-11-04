@@ -4,10 +4,14 @@ import Input from '../../components/ui/Input';
 import UsageExampleCards from '../../components/ui/UsageExampleCards';
 import { geminiApi } from '../../api/ai/geminiTranslate.service';
 import { FaArrowRightArrowLeft } from 'react-icons/fa6';
+import { FaVolumeUp } from 'react-icons/fa';
 import SelectMenu from '../../components/ui/SelectMenu';
 import { useSelectLanguage } from '../../context/Language/context';
 import { geminiExamples } from '../../api/ai/geminiExamples.service';
-import { getImagesForSearch, type Image } from '../../api/images/unsplash.service';
+import {
+  getImagesForSearch,
+  type Image,
+} from '../../api/images/unsplash.service';
 
 export default function Home() {
   const [inputSearch, setInputSearch] = useState<string>('');
@@ -17,7 +21,7 @@ export default function Home() {
   const [hasSearched, setHasSearched] = useState(false);
   const [examples, setExamples] = useState<string[]>([]);
   const [topics, setTopics] = useState<string[]>([]);
-  const [exampleLanguage, setExampleLanguage] = useState<string>('')
+  const [exampleLanguage, setExampleLanguage] = useState<string>('');
   const [images, setImages] = useState<Image[]>([]);
 
   const {
@@ -33,6 +37,42 @@ export default function Home() {
 
     setSourceLanguage(target);
     setTargetLanguage(source);
+  };
+
+  const handleSpeak = (text: string, lang: string) => {
+
+    // Verifica se o navegador suporta a API
+    if ('speechSynthesis' in window) {
+      // Cancela qualquer fala anterior para evitar sobreposição
+      window.speechSynthesis.cancel();
+
+      // Cria a "enunciação" (o que será falado)
+      const utterance = new SpeechSynthesisUtterance(text);
+
+      // Define o idioma da fala.
+      utterance.lang = lang;
+
+      // Manda o navegador falar
+      window.speechSynthesis.speak(utterance);
+    } else {
+      // Fallback para navegadores que não suportam a API
+      alert('Desculpe, seu navegador não suporta a funcionalidade de fala.');
+    }
+  };
+
+  const getLanguageCodeForSpeech = (langName: string): string => {
+    const languageMap: { [key: string]: string } = {
+      Português: 'pt-BR',
+      Inglês: 'en-US',
+      Espanhol: 'es-ES',
+      Francês: 'fr-FR',
+      Alemão: 'de-DE',
+      Russo: 'ru-RU',
+    };
+
+    // Se o idioma não for encontrado no mapa, ele usará 'en-US' como padrão
+    // para evitar erros.
+    return languageMap[langName] || 'en-US';
   };
 
   const handleSubmit = async () => {
@@ -123,8 +163,24 @@ export default function Home() {
             <div className="text-4xl font-bold text-slate-900 mb-3 tracking-tight word-main">
               {untranslatedSentence}
             </div>
-            <div className="text-2xl text-primary font-semibold mb-2 word-translation">
-              {translatedSentence}
+            <div className="flex justify-center items-center gap-2 mb-2">
+              <div className="text-2xl text-primary font-semibold word-translation">
+                {translatedSentence}
+              </div>
+              {/* Botão para falar */}
+              <button
+                onClick={() => {
+                  const langCode = getLanguageCodeForSpeech(
+                    targetLanguage.language
+                  );
+                  handleSpeak(translatedSentence, langCode);
+                }}
+                className="p-2 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
+                aria-label="Ouvir tradução"
+                title="Ouvir tradução"
+              >
+                <FaVolumeUp size={20} className="text-slate-500" />
+              </button>
             </div>
             <div className="text-base text-slate-500 font-mono word-phonetic">
               {/* /ˈbʌtərˌflaɪ/ */}
@@ -142,14 +198,10 @@ export default function Home() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
                 {images.length > 0 ? (
                   images.map((image) => (
                     <div key={image.id}>
-                      <CardImage
-                        img={image.imageUrl}
-                        phrase={image.phrase}
-                      />
+                      <CardImage img={image.imageUrl} phrase={image.phrase} />
                     </div>
                   ))
                 ) : (
@@ -187,7 +239,6 @@ export default function Home() {
                   🔗 Palavras Relacionadas
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  
                   {topics.map((topic, idx) => {
                     return (
                       <div key={idx}>
@@ -197,7 +248,6 @@ export default function Home() {
                       </div>
                     );
                   })}
-                  
                 </div>
               </div>
             </div>
