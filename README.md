@@ -1,8 +1,14 @@
-# SmartTranslator - Tradutor Visual Inteligente
+# SmartTranslator
+
+![Logo do Projeto](./src/assets/home-page.png)
+
+> 🔗 **Acesse o projeto online:** https://smart-translator-kappa.vercel.app/
+
+## Introdução
 
 Este é um projeto acadêmico desenvolvido para a disciplina de Sistemas distribuídos da Universidade Federal do Rio Grande (FURG).
 
-O SmartTranslator é uma plataforma web de aprendizado de idiomas que vai além da tradução simples. Ao digitar uma palavra, a aplicação utiliza Inteligência Artificial (Google Gemini) para fornecer a tradução, frases de exemplo e tópicos relacionados, enquanto consome a API do Unsplash para exibir um contexto visual com imagens relevantes.
+O SmartTranslator é uma plataforma web de aprendizado de idiomas que vai além da tradução simples. Ao digitar uma palavra, a aplicação utiliza Inteligência Artificial (Google Gemini) para gerar traduções, frases de exemplo e tópicos relacionados, enquanto consome a API do Unsplash para exibir imagens que criam um contexto visual relevante.
 
 ## Funcionalidades
 
@@ -19,7 +25,6 @@ O SmartTranslator é uma plataforma web de aprendizado de idiomas que vai além 
 * **APIs Consumidas:**
     * Google Gemini (via `@google/genai`)
     * Unsplash API (via `fetch`)
-    * OpenAI (código de serviço presente)
 
 ---
 
@@ -30,10 +35,26 @@ Siga os passos abaixo para executar o projeto em sua máquina local.
 ### 1. Pré-requisitos
 
 * Node.js (v18 ou superior)
-* `npm` ou `yarn`
+* Gerenciador de pacotes (`npm` ou `yarn`)
+* Chaves de API para o **Google Gemini** e **Unsplash**
 
 ### 2. Clonar o Repositório
 
 ```bash
 git clone https://github.com/DaviSant0s/SmartTranslator.git
-cd smart-translator
+cd SmartTranslator
+```
+
+### 3. Instalar Dependências
+```bash
+npm install
+# ou
+yarn install
+```
+
+### 4. Executar o Projeto
+```bash
+npm run dev
+# ou
+yarn dev
+```
